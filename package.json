@@ -1,0 +1,15 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "stylebook": "./bin/index.js"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "inquirer": "^9.0.2",
+    "yargs": "^17.5.1"
+  }
+}
