@@ -20,7 +20,7 @@
     "yargs": "^17.5.1"
   },
   "keywords": [
-      "liferay",
-      "stylebook"
-  ] 
+    "liferay",
+    "stylebook"
+  ]
 }

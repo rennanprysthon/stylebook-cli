@@ -6,27 +6,27 @@ import _yargs from "yargs";
 import { normalizeToken } from "./util.js";
 import chalk from "chalk";
 import {
-    checkIfFileExists,
-    saveJsonToFile,
-    loadJsonFromFile
-} from './fileUtils.js';
+  saveJsonToFile,
+  loadJsonFromFile,
+  generateSassFile,
+} from "./fileUtils.js";
 
 const log = console.log;
 
 const yargs = _yargs(hideBin(process.argv));
 
 async function createSection() {
-    const { name: sectionName } = await inquirer.prompt(
-        Object.values({
-          name: {
-            message: `Section label?`,
-            name: "name",
-            demandOption: true,
-            describe: "Section label",
-            type: "string",
-          },
-        })
-    )
+  const { name: sectionName } = await inquirer.prompt(
+    Object.values({
+      name: {
+        message: `Section label?`,
+        name: "name",
+        demandOption: true,
+        describe: "Section label",
+        type: "string",
+      },
+    })
+  );
 
   if (!!sectionName) {
     let name = normalizeToken(sectionName);
@@ -40,7 +40,7 @@ async function createSection() {
     };
 
     fileJson.frontendTokenCategories.push(section);
-    
+
     saveJsonToFile(fileJson);
   }
 }
@@ -60,17 +60,17 @@ async function createTokenSetDefinition() {
     choices,
   });
 
-    const { name: label } = await inquirer.prompt(
-        Object.values({
-          name: {
-            message: `Token set label?`,
-            name: "name",
-            demandOption: true,
-            describe: "Token set label",
-            type: "string",
-          },
-        })
-    )
+  const { name: label } = await inquirer.prompt(
+    Object.values({
+      name: {
+        message: `Token set label?`,
+        name: "name",
+        demandOption: true,
+        describe: "Token set label",
+        type: "string",
+      },
+    })
+  );
 
   const tokenSetLabel = normalizeToken(label);
 
@@ -91,7 +91,7 @@ async function createTokenSetDefinition() {
 
 async function createTokenDefinition() {
   const fileJson = loadJsonFromFile();
-  
+
   const choices = fileJson.frontendTokenCategories.reduce((prev, next) => {
     prev.push(next.name);
     prev.push(new inquirer.Separator());
@@ -112,7 +112,7 @@ async function createTokenDefinition() {
 
   if (tokens.length === 0) {
     log(chalk.red(`Section '${sectionName}' has no tokenSet`));
-    return
+    return;
   }
 
   const choicesTokens = tokens.reduce((prev, next) => {
@@ -161,11 +161,7 @@ async function createTokenDefinition() {
         message: `Token type?`,
         name: "name",
         type: "list",
-        choices: [
-           'color',
-            new inquirer.Separator(),
-            'text'
-        ]
+        choices: ["color", new inquirer.Separator(), "text"],
       },
     })
   );
@@ -183,13 +179,28 @@ async function createTokenDefinition() {
     type: "String",
   };
 
-  if (tokenType === 'color') {
-    frontendToken.editorType = 'ColorPicker'
+  if (tokenType === "color") {
+    frontendToken.editorType = "ColorPicker";
   }
   frontendTokens.push(frontendToken);
 
   saveJsonToFile(fileJson);
   log(chalk.blueBright(`Token definition ${label} created!`));
+}
+
+async function generateSass() {
+  const { name: sassName } = await inquirer.prompt(
+    Object.values({
+      name: {
+        message: "SASS file name:",
+        name: "name",
+        demandOption: true,
+        describe: "SASS file name",
+        type: "string",
+      },
+    })
+  );
+  generateSassFile(`${sassName}.scss`);
 }
 
 yargs
@@ -213,4 +224,5 @@ yargs
   .command("create", "Create token definition json file", () =>
     saveJsonToFile(null, true)
   )
+  .command("generate", "Create sass file", generateSass)
   .help().argv;
