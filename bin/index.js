@@ -121,14 +121,14 @@ async function createTokenDefinition() {
     return prev;
   }, []);
 
-  const tokenSet = await inquirer.prompt({
+  const tokenSetAnswer = await inquirer.prompt({
     type: "list",
     name: "Which token set?",
     choices: choicesTokens,
   });
 
   let { frontendTokens } = tokens.filter(
-    (tokenSet) => tokenSet.name === Object.values(tokenSet)[0]
+    (tokenSet) => tokenSet.name === Object.values(tokenSetAnswer)[0]
   )[0];
 
   const { name: label } = await inquirer.prompt(
