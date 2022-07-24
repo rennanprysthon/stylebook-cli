@@ -43,7 +43,6 @@ function generateSassFile(fileName = "export.scss") {
   let json = loadJsonFromFile();
 
   json.frontendTokenCategories.forEach((tokenSet) => {
-    console.log(tokenSet.name.toLocaleUpperCase());
     finalFile += `//# ${tokenSet.name.toLocaleUpperCase()} \n`;
 
     tokenSet.frontendTokenSets.forEach((frontendTokenSet) => {
