@@ -1,15 +1,26 @@
 {
-  "name": "cli",
+  "name": "stylebook-cli",
+  "description": "A basic cli for stylebook",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "type": "module",
+  "author": {
+    "name": "Rennan Prysthon",
+    "email": "rennan.prysthon@liferay.com"
+  },
   "bin": {
     "stylebook": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node ./bin/index.js"
   },
   "dependencies": {
     "chalk": "^5.0.1",
     "inquirer": "^9.0.2",
     "yargs": "^17.5.1"
-  }
+  },
+  "keywords": [
+      "liferay",
+      "stylebook"
+  ] 
 }
