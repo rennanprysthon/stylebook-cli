@@ -4,10 +4,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
-  "author": {
-    "name": "Rennan Prysthon",
-    "email": "rennan.prysthon@liferay.com"
-  },
+  "author": "Rennan Prysthon <rennan.prysthon@liferay.com>",
   "bin": {
     "stylebook": "./bin/index.js"
   },
@@ -22,5 +19,14 @@
   "keywords": [
     "liferay",
     "stylebook"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
+  },
+  "main": "index.js",
+  "repository": "git@github.com:rennanprysthon/stylebook-cli.git",
+  "private": false
 }
