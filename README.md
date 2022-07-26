@@ -17,8 +17,7 @@ A sample CLI to manage frontend-token-definition.json file
 Install this cli using cli. First, clone this repo and run this.
 
 ```bash
-  npm install -g .
-
+    npm i stylebook-cli
 ```
     
 ## Usage/Examples

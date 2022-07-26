@@ -1,7 +1,7 @@
 {
   "name": "stylebook-cli",
   "description": "A basic cli for stylebook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "author": "Rennan Prysthon <rennan.prysthon@liferay.com>",
