@@ -1,10 +1,13 @@
 import fs from 'fs'
-import chalk from 'chalk'
+
+import { 
+	error as errorMessage,
+	info as infoMessage,
+	success as successMessage
+} from './messages.js'
 
 const FILE_NAME = 'frontend-token-definition.json'
 const FILE_PATH = `./${FILE_NAME}`
-
-const log = console.log
 
 const INITIAL_VALUE = {
 	frontendTokenCategories: [],
@@ -19,11 +22,11 @@ function saveJsonToFile(jsonValue, isFirstTime = false) {
 
 	fs.writeFile(FILE_NAME, JSON.stringify(json, null, 4), function (error) {
 		if (error) {
+			errorMessage(`Something went wrong: ${error}`)
 			throw error
 		}
-		if (isFirstTime) {
-			log(chalk.blueBright(`${FILE_NAME} created!`))
-		}
+
+		infoMessage(`${FILE_NAME} was ${isFirstTime ? 'created' : 'updated'}!`)
 	})
 }
 
@@ -57,9 +60,11 @@ function generateSassFile(fileName = 'export.scss') {
 
 	fs.writeFile(`./${fileName}`, finalFile, function (error) {
 		if (error) {
+			errorMessage(`Something went wrong: ${error}`)
 			throw error
 		}
-		log(chalk.blueBright(`${fileName} created!`))
+		successMessage(`${fileName} created!`)
 	})
 }
+
 export { saveJsonToFile, loadJsonFromFile, generateSassFile }

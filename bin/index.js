@@ -1,17 +1,20 @@
 #! /usr/bin/env node
 
 import inquirer from 'inquirer'
-import { hideBin } from 'yargs/helpers'
 import _yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
+
 import { normalizeToken } from './util.js'
-import chalk from 'chalk'
 import {
 	saveJsonToFile,
 	loadJsonFromFile,
 	generateSassFile,
 } from './fileUtils.js'
 
-const log = console.log
+import {
+	info as infoMessage,
+	success as successMessage
+} from './messages.js'
 
 const yargs = _yargs(hideBin(process.argv))
 
@@ -86,7 +89,7 @@ async function createTokenSetDefinition() {
 		.frontendTokenSets.push(tokenSet)
 
 	saveJsonToFile(fileJson)
-	log(chalk.blueBright(`Token set ${tokenSetLabel} created!`))
+	successMessage(`Token set ${tokenSetLabel} created!`)
 }
 
 async function createTokenDefinition() {
@@ -111,7 +114,7 @@ async function createTokenDefinition() {
 	)[0].frontendTokenSets
 
 	if (tokens.length === 0) {
-		log(chalk.red(`Section '${sectionName}' has no tokenSet`))
+		infoMessage(`Section '${sectionName}' has no tokenSet`)
 		return
 	}
 
@@ -185,7 +188,7 @@ async function createTokenDefinition() {
 	frontendTokens.push(frontendToken)
 
 	saveJsonToFile(fileJson)
-	log(chalk.blueBright(`Token definition ${label} created!`))
+	infoMessage(`Token definition ${label} created!`)
 }
 
 async function generateSass() {
