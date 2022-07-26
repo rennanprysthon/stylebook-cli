@@ -4,6 +4,11 @@ import inquirer from 'inquirer'
 import _yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 
+import {
+	getCategory,
+	getTokenSet
+} from './frontendTokenManipulator.js'
+
 import { normalizeToken } from './util.js'
 import {
 	saveJsonToFile,
@@ -82,11 +87,11 @@ async function createTokenSetDefinition() {
 		label,
 		frontendTokens: [],
 	}
+	
 	const sectionName = Object.values(section)[0]
+	let sectionJson = getCategory(sectionName, fileJson)
 
-	fileJson.frontendTokenCategories
-		.filter((tokenSet) => tokenSet.name === sectionName)[0]
-		.frontendTokenSets.push(tokenSet)
+	sectionJson.frontendTokenSets.push(tokenSet) 
 
 	saveJsonToFile(fileJson)
 	successMessage(`Token set ${tokenSetLabel} created!`)
@@ -109,9 +114,7 @@ async function createTokenDefinition() {
 
 	const sectionName = Object.values(section)[0]
 
-	const tokens = fileJson.frontendTokenCategories.filter(
-		(tokenSet) => tokenSet.name === sectionName
-	)[0].frontendTokenSets
+	let {frontendTokenSets: tokens} = getCategory(sectionName, fileJson)
 
 	if (tokens.length === 0) {
 		infoMessage(`Section '${sectionName}' has no tokenSet`)
@@ -130,9 +133,9 @@ async function createTokenDefinition() {
 		choices: choicesTokens,
 	})
 
-	let { frontendTokens } = tokens.filter(
-		(tokenSet) => tokenSet.name === Object.values(tokenSetAnswer)[0]
-	)[0]
+	const tokenSetName = Object.values(tokenSetAnswer)[0]
+
+	let { frontendTokens} = getTokenSet(sectionName, tokenSetName, fileJson)
 
 	const { name: label } = await inquirer.prompt(
 		Object.values({
