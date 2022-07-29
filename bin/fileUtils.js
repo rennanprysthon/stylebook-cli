@@ -44,10 +44,10 @@ function generateSassFile(fileName = 'export.scss') {
 		finalFile += `//# ${tokenSet.name.toLocaleUpperCase()} \n`
 
 		tokenSet.frontendTokenSets.forEach((frontendTokenSet) => {
-			finalFile += `\t //${tokenSet.name} \n`
+			finalFile += `\t //${frontendTokenSet.name} \n`
 
 			frontendTokenSet.frontendTokens.forEach((frontendToken) => {
-				finalFile += `\t $${frontendToken.name}:  var(--${frontendToken.label}); \n`
+				finalFile += `\t $${frontendToken.label}:  var(--${frontendToken.label}); \n`
 			})
 			finalFile += '\n'
 		})
