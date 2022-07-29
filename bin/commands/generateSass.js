@@ -4,7 +4,7 @@ import {
 } from '../fileUtils.js'
 
 const generateSass = {
-	command: 'generate <source> [proxy]',
+	command: 'generate',
 	describe: 'generate a .scss file',
 	handler: async () => {
 		const { name: sassName } = await inquirer.prompt(
