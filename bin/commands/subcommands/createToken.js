@@ -2,18 +2,18 @@ import inquirer from 'inquirer'
 
 import {
 	normalizeToken
-} from '../util.js'
+} from '../../util.js'
 
 import {
 	loadJsonFromFile,
 	saveJsonToFile
-} from '../fileUtils.js'
+} from '../../fileUtils.js'
 
 import {
 	info as infoMessage
-} from '../messages.js'
+} from '../../messages.js'
 
-import { getCategory, getTokenSet } from '../frontendTokenManipulator.js'
+import { getCategory, getTokenSet } from '../../frontendTokenManipulator.js'
 
 const createToken = {
 	command: 'create:token',

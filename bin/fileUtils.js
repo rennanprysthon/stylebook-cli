@@ -16,6 +16,12 @@ function checkIfFileExists() {
 	return fs.existsSync(FILE_PATH)
 }
 
+function createJsonFile() {
+	if (!checkIfFileExists()) {
+		saveJsonToFile(INITIAL_VALUE)
+	}
+}
+ 
 function saveJsonToFile(jsonValue) {
 	fs.writeFile(FILE_NAME, JSON.stringify(jsonValue, null, 4), function (error) {
 		if (error) {
@@ -26,10 +32,7 @@ function saveJsonToFile(jsonValue) {
 }
 
 function loadJsonFromFile() {
-	if (!checkIfFileExists()) {
-		saveJsonToFile(INITIAL_VALUE)
-	}
-
+	createJsonFile()
 	const fileContent = fs.readFileSync(FILE_PATH, 'utf8')
 	const fileJson = JSON.parse(fileContent)
 
@@ -62,4 +65,4 @@ function generateSassFile(fileName = 'export.scss') {
 	})
 }
 
-export { saveJsonToFile, loadJsonFromFile, generateSassFile }
+export { saveJsonToFile, loadJsonFromFile, generateSassFile, createJsonFile, checkIfFileExists }

@@ -1,9 +1,9 @@
 import inquirer from 'inquirer'
-import { normalizeToken } from '../util.js'
+import { normalizeToken } from '../../util.js'
 import {
 	saveJsonToFile,
 	loadJsonFromFile,
-} from '../fileUtils.js'
+} from '../../fileUtils.js'
 
 const createCategory = {
 	command: 'create:category',

@@ -1,18 +1,18 @@
 import inquirer from 'inquirer'
 
-import { normalizeToken } from '../util.js'
+import { normalizeToken } from '../../util.js'
 import {
 	getCategory,
-} from '../frontendTokenManipulator.js'
+} from '../../frontendTokenManipulator.js'
 
 import {
 	saveJsonToFile,
 	loadJsonFromFile,
-} from '../fileUtils.js'
+} from '../../fileUtils.js'
 
 import {
 	success as successMessage,
-} from '../messages.js'
+} from '../../messages.js'
 
 
 const createTokenSetDefinition = {
