@@ -29,11 +29,12 @@ const createToken = {
   
 		const section = await inquirer.prompt({
 			type: 'list',
-			name: 'Which section?',
+			name: 'sectionName',
+			message: 'Which section?',
 			choices,
 		})
   
-		const sectionName = Object.values(section)[0]
+		const { sectionName } = section
   
 		let {frontendTokenSets: tokens} = getCategory(sectionName, fileJson)
   
@@ -50,11 +51,12 @@ const createToken = {
   
 		const tokenSetAnswer = await inquirer.prompt({
 			type: 'list',
-			name: 'Which token set?',
+			name: 'tokenSetName',
+			message: 'Which token set?',
 			choices: choicesTokens,
 		})
   
-		const tokenSetName = Object.values(tokenSetAnswer)[0]
+		const { tokenSetName } = tokenSetAnswer
   
 		let { frontendTokens} = getTokenSet(sectionName, tokenSetName, fileJson)
   
@@ -82,6 +84,18 @@ const createToken = {
 			})
 		)
   
+		const { name: cssVariable } = await inquirer.prompt(
+			Object.values({
+				name: {
+					message: 'Css variable name?',
+					name: 'name',
+					demandOption: true,
+					describe: 'Css variable name',
+					type: 'string',
+				},
+			})
+		)
+
 		const { name: tokenType } = await inquirer.prompt(
 			Object.values({
 				name: {
@@ -92,14 +106,14 @@ const createToken = {
 				},
 			})
 		)
-  
+		
 		const frontendToken = {
 			defaultValue,
 			label,
 			mappings: [
 				{
 					type: 'cssVariable',
-					value: label,
+					value: cssVariable,
 				},
 			],
 			name: normalizeToken(label),
