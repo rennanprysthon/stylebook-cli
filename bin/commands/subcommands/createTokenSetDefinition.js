@@ -11,6 +11,7 @@ import {
 } from '../../fileUtils.js'
 
 import {
+	error,
 	success as successMessage,
 } from '../../messages.js'
 
@@ -21,6 +22,11 @@ const createTokenSetDefinition = {
 	handler: async () => {
 		const fileJson = loadJsonFromFile()
 
+		if (fileJson.frontendTokenCategories.length === 0) {
+			error('There\'s no category added yey')
+			return
+		}
+
 		const choices = fileJson.frontendTokenCategories.reduce((prev, next) => {
 			prev.push(next.name)
 			prev.push(new inquirer.Separator())
@@ -29,7 +35,8 @@ const createTokenSetDefinition = {
   
 		const section = await inquirer.prompt({
 			type: 'list',
-			name: 'Which section?',
+			name: 'sectionName',
+			message: 'Which section?',
 			choices,
 		})
   
@@ -53,14 +60,13 @@ const createTokenSetDefinition = {
 			frontendTokens: [],
 		}
     
-		const sectionName = Object.values(section)[0]
+		const { sectionName } = section
 		let sectionJson = getCategory(sectionName, fileJson)
   
 		sectionJson.frontendTokenSets.push(tokenSet) 
   
 		saveJsonToFile(fileJson)
 		successMessage(`Token set ${tokenSetLabel} created!`)
-  
 	}
 }
 

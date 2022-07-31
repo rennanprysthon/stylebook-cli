@@ -10,6 +10,7 @@ import {
 } from '../../fileUtils.js'
 
 import {
+	error,
 	info as infoMessage
 } from '../../messages.js'
 
@@ -20,7 +21,10 @@ const createToken = {
 	describe: 'create a token inside frontendtoken-definition file',
 	handler: async () => {
 		const fileJson = loadJsonFromFile()
-
+		if (fileJson.frontendTokenCategories.length === 0) {
+			error('There\'s no category added yey')
+			return
+		}
 		const choices = fileJson.frontendTokenCategories.reduce((prev, next) => {
 			prev.push(next.name)
 			prev.push(new inquirer.Separator())
