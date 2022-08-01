@@ -12,6 +12,7 @@ function getCategory(categoryName, object) {
 	}
 	return false
 }
+
 function getTokenSet(categoryName, tokenSetName, object) {
 	let category = getCategory(categoryName, object)
 	if (!!category && !!category.frontendTokenSets) {
@@ -19,6 +20,7 @@ function getTokenSet(categoryName, tokenSetName, object) {
 	}
 	return false
 }
+
 function getToken(categoryName, tokenSetName, token, object) {
 	let tokenSet = getTokenSet(categoryName, tokenSetName, object)
 	if (!!tokenSet && !!tokenSet.frontendTokens) {
