@@ -2,14 +2,13 @@ import fs from 'fs'
 
 import { 
 	error as errorMessage,
-	info as infoMessage,
 	success as successMessage
 } from './messages.js'
 
 const FILE_NAME = 'frontend-token-definition.json'
 const FILE_PATH = `./${FILE_NAME}`
 
-const INITIAL_VALUE = {
+export const INITIAL_VALUE = {
 	frontendTokenCategories: [],
 }
 
@@ -17,24 +16,23 @@ function checkIfFileExists() {
 	return fs.existsSync(FILE_PATH)
 }
 
-function saveJsonToFile(jsonValue, isFirstTime = false) {
-	const json = isFirstTime ? INITIAL_VALUE : jsonValue
-
-	fs.writeFile(FILE_NAME, JSON.stringify(json, null, 4), function (error) {
+function createJsonFile() {
+	if (!checkIfFileExists()) {
+		saveJsonToFile(INITIAL_VALUE)
+	}
+}
+ 
+function saveJsonToFile(jsonValue) {
+	fs.writeFile(FILE_NAME, JSON.stringify(jsonValue, null, 4), function (error) {
 		if (error) {
 			errorMessage(`Something went wrong: ${error}`)
 			throw error
 		}
-
-		infoMessage(`${FILE_NAME} was ${isFirstTime ? 'created' : 'updated'}!`)
 	})
 }
 
 function loadJsonFromFile() {
-	if (!checkIfFileExists()) {
-		saveJsonToFile(INITIAL_VALUE)
-	}
-
+	createJsonFile()
 	const fileContent = fs.readFileSync(FILE_PATH, 'utf8')
 	const fileJson = JSON.parse(fileContent)
 
@@ -49,10 +47,10 @@ function generateSassFile(fileName = 'export.scss') {
 		finalFile += `//# ${tokenSet.name.toLocaleUpperCase()} \n`
 
 		tokenSet.frontendTokenSets.forEach((frontendTokenSet) => {
-			finalFile += `\t //${tokenSet.name} \n`
+			finalFile += `\t //${frontendTokenSet.name} \n`
 
 			frontendTokenSet.frontendTokens.forEach((frontendToken) => {
-				finalFile += `\t $${frontendToken.name}:  var(--${frontendToken.label}); \n`
+				finalFile += `\t $${frontendToken.label}:  var(--${frontendToken.label}); \n`
 			})
 			finalFile += '\n'
 		})
@@ -67,4 +65,4 @@ function generateSassFile(fileName = 'export.scss') {
 	})
 }
 
-export { saveJsonToFile, loadJsonFromFile, generateSassFile }
+export { saveJsonToFile, loadJsonFromFile, generateSassFile, createJsonFile, checkIfFileExists }
